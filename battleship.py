@@ -1,5 +1,7 @@
 from random import randint
 from colorama import Fore
+
+# Making a 10x10 grid with letters for rows and numbers for columns
 grid_size = 10
 grid = [['O'] * grid_size for _ in range(grid_size)]
 enemy_grid = [['O'] * grid_size for _ in range(grid_size)]
@@ -22,6 +24,7 @@ def create_grid(grid, show_ships=False):
         print()
 print("Welcome to the game, Battleship!")
 
+# Getting valid user input and making the computer recognize to convert the ascii value to a row index
 def get_valid_ship_coordinate(prompt):
     while True:
         coordinate = input(prompt).strip().upper()
@@ -33,7 +36,8 @@ def get_valid_ship_coordinate(prompt):
             column_index = int(coordinate) - 1
             if 0 <= column_index < grid_size:
                 return column_index            
-            
+
+# Function to get user to place ships on a valid coordinate
 def place_Carrier(grid, ship_length, ship_marker, user_ship_name1):
     print(f"Place your '{user_ship_name1}' ({Carrier_length} indices long)")
     while True:
@@ -234,6 +238,7 @@ def place_Patrol(grid, ship_length, ship_marker, user_ship_name5):
 
         print("Invalid placement. Try again.")       
 
+# Function for computer to place ships on a random coordinate that don't overlap
 def random_computer_carrier(grid, num_ships, ship_length, ship_marker, ship_name):
     ship_length = 5
     
@@ -379,6 +384,7 @@ def random_computer_patrol(grid, num_ships, ship_length, ship_marker, ship_name)
                     enemy_grid[ship_row + i][ship_col] = ship_marker
                 break
 
+# Naming and differentiating each ship
 if __name__ == "__main__":
     num_ships_per_player = 5
     
@@ -428,7 +434,8 @@ if __name__ == "__main__":
     computer_ship_marker = 'P'
     computer_ship_name5 = "Patrol Boat"
     random_computer_patrol(enemy_grid, num_ships_per_player, Patrol_length, computer_ship_marker, computer_ship_name5)
-    
+
+    # The actual Battleship game
     print()
     print("Let's play Battleship!")
     print("Your grid:")
@@ -444,7 +451,8 @@ if __name__ == "__main__":
     computer_submarine_remaining = 3
     computer_patrol_remaining = 2
     computer_ships = [computer_ship_marker, computer_ship_marker]
-    
+
+    # Game logic for user attempting to sink computer's ships
     turn = 0
     for turn in range(100):
         print("Turn", turn + 1)
@@ -515,7 +523,7 @@ if __name__ == "__main__":
             if computer_patrol_remaining == 0:
                 print("You sunk the enemy's Patrol boat!")
                 
-        
+        # Game logic for computer attempting to sink user's ships
         if grid[computer_guess_row][computer_guess_col] == 'O':
             print()
             grid[computer_guess_row][computer_guess_col] = Fore.RED + 'M' + Fore.WHITE
@@ -536,7 +544,7 @@ if __name__ == "__main__":
             print("Computer already guessed here")
         
             
-        
+        # Ending the game
         if computer_ships_remaining == 0:
             print("Congratulations! You sunk all of the enemies ships!")
             break
