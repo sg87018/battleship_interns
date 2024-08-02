@@ -1,9 +1,9 @@
 from random import randint
-from colorama import Fore
 
-# Making a 10x10 grid with letters for rows and numbers for columns
+# Making the 10x10 grid
 grid_size = 10
 grid = [['O'] * grid_size for _ in range(grid_size)]
+player_guess_grid = [['O'] * grid_size for _ in range(grid_size)]
 enemy_grid = [['O'] * grid_size for _ in range(grid_size)]
 
 def create_grid(grid, show_ships=False):
@@ -31,11 +31,11 @@ def get_valid_ship_coordinate(prompt):
         
         if len(coordinate) == 1 and 65 <= ord(coordinate) <= 74:
             row_index = ord(coordinate) - 65
-            return row_index
+            return row_index           
         elif coordinate.isdigit():
             column_index = int(coordinate) - 1
             if 0 <= column_index < grid_size:
-                return column_index            
+                return column_index 
 
 # Function to get user to place ships on a valid coordinate
 def place_Carrier(grid, ship_length, ship_marker, user_ship_name1):
@@ -395,52 +395,55 @@ if __name__ == "__main__":
     Patrol_length = 2
     
 
-    user_ship_marker = Fore.GREEN + 'C' + Fore.WHITE
+    user_ship_marker1 = 'C'
     user_ship_name1 = "Carrier"   
-    place_Carrier(grid, Carrier_length, user_ship_marker, user_ship_name1)
+    place_Carrier(grid, Carrier_length, user_ship_marker1, user_ship_name1)
 
-    user_ship_marker = Fore.GREEN + 'B' + Fore.WHITE
+    user_ship_marker2 = 'B'
     user_ship_name2 = "Battleship"
-    place_Battleship(grid, Battleship_length, user_ship_marker, user_ship_name2)
+    place_Battleship(grid, Battleship_length, user_ship_marker2, user_ship_name2)
     
-    user_ship_marker = Fore.GREEN + 'D' + Fore.WHITE
+    user_ship_marker3 = 'D'
     user_ship_name3 = "Destroyer"
-    place_Destroyer(grid, Destroyer_length, user_ship_marker, user_ship_name3)
+    place_Destroyer(grid, Destroyer_length, user_ship_marker3, user_ship_name3)
     
-    user_ship_marker = Fore.GREEN + 'S' + Fore.WHITE
+    user_ship_marker4 = 'S'
     user_ship_name4 = "Submarine"
-    place_Submarine(grid, Submarine_length, user_ship_marker, user_ship_name4)
+    place_Submarine(grid, Submarine_length, user_ship_marker4, user_ship_name4)
     
-    user_ship_marker = Fore.GREEN + 'P' + Fore.WHITE
+    user_ship_marker5 = 'P'
     user_ship_name5 =  "Patrol Boat"
-    place_Patrol(grid, Patrol_length, user_ship_marker, user_ship_name5)
+    place_Patrol(grid, Patrol_length, user_ship_marker5, user_ship_name5)
 
-    computer_ship_marker = 'C'
+    computer_ship_marker1 = 'C'
     computer_ship_name1 = "Carrier"
-    random_computer_carrier(enemy_grid, num_ships_per_player, Carrier_length, computer_ship_marker, computer_ship_name1)
+    random_computer_carrier(enemy_grid, num_ships_per_player, Carrier_length, computer_ship_marker1, computer_ship_name1)
 
-    computer_ship_marker = 'B'
+    computer_ship_marker2 = 'B'
     computer_ship_name2 = "Battleship"
-    random_computer_battleship(enemy_grid, num_ships_per_player, Battleship_length, computer_ship_marker, computer_ship_name2)
+    random_computer_battleship(enemy_grid, num_ships_per_player, Battleship_length, computer_ship_marker2, computer_ship_name2)
     
-    computer_ship_marker = 'D'
+    computer_ship_marker3 = 'D'
     computer_ship_name3 = "Destroyer"
-    random_computer_destroyer(enemy_grid, num_ships_per_player, Destroyer_length, computer_ship_marker, computer_ship_name3)
+    random_computer_destroyer(enemy_grid, num_ships_per_player, Destroyer_length, computer_ship_marker3, computer_ship_name3)
     
-    computer_ship_marker = 'S'
+    computer_ship_marker4 = 'S'
     computer_ship_name4 = "Submarine"
-    random_computer_submarine(enemy_grid, num_ships_per_player, Submarine_length, computer_ship_marker, computer_ship_name4)
+    random_computer_submarine(enemy_grid, num_ships_per_player, Submarine_length, computer_ship_marker4, computer_ship_name4)
     
-    computer_ship_marker = 'P'
+    computer_ship_marker5 = 'P'
     computer_ship_name5 = "Patrol Boat"
-    random_computer_patrol(enemy_grid, num_ships_per_player, Patrol_length, computer_ship_marker, computer_ship_name5)
-
+    random_computer_patrol(enemy_grid, num_ships_per_player, Patrol_length, computer_ship_marker5, computer_ship_name5)
+    
     # The actual Battleship game
     print()
     print("Let's play Battleship!")
     print("Your grid:")
     create_grid(grid, show_ships=True) # Show user's grid with their ships
     print()
+    print("You're guessing grid:")
+    create_grid(player_guess_grid, show_ships=False)
+    print("\n")
     
     user_ships_remaining = ((num_ships_per_player * 2) + 7)
     computer_ships_remaining =((num_ships_per_player * 2) + 7)
@@ -450,8 +453,8 @@ if __name__ == "__main__":
     computer_destroyer_remaining = 3
     computer_submarine_remaining = 3
     computer_patrol_remaining = 2
-    computer_ships = [computer_ship_marker, computer_ship_marker]
-
+    #computer_ships = [computer_ship_marker, computer_ship_marker]
+    
     # Game logic for user attempting to sink computer's ships
     turn = 0
     for turn in range(100):
@@ -463,20 +466,20 @@ if __name__ == "__main__":
             computer_guess_row = randint(0, 9)
             computer_guess_col = randint(0, 9)
             
-            if enemy_grid[guess_row][guess_col] in ['X', 'M']:
+            if player_guess_grid[guess_row][guess_col] in ['X', 'M']:
                 print("You've already guessed this spot. Try again.")
             else:
                 break
         
-        if enemy_grid[guess_row][guess_col] not in ('C' ,'D', 'P', 'B', 'S'):
+        if enemy_grid[guess_row][guess_col] not in (computer_ship_marker1, computer_ship_marker2, computer_ship_marker3, computer_ship_marker4, computer_ship_marker5):
             print()
             print(f"You struck at {chr(65 + guess_row)} , {guess_col + 1} and missed!")
-            enemy_grid[guess_row][guess_col] = "X"
+            player_guess_grid[guess_row][guess_col] = "M"
         
         if enemy_grid[guess_row][guess_col] == 'C':
             print(f"You hit the enemy's {computer_ship_name1}!")
-            enemy_grid[guess_row][guess_col] = "X"
-            computer_ships_remaining = computer_ships_remaining - 1
+            grid[guess_row][guess_col] = "X"
+            computer_ships_remaining -= 1
             computer_carrier_remaining -= 1
             
             if computer_carrier_remaining == 0:
@@ -485,8 +488,8 @@ if __name__ == "__main__":
             
         elif enemy_grid[guess_row][guess_col] == 'B':
             print(f"You hit the enemy's {computer_ship_name2}!")
-            enemy_grid[guess_row][guess_col] = "X"
-            computer_ships_remaining = computer_ships_remaining - 1
+            player_guess_grid[guess_row][guess_col] = "X"
+            computer_ships_remaining -= 1
             computer_battleship_remaining -= 1
             
             if computer_battleship_remaining == 0:
@@ -495,7 +498,7 @@ if __name__ == "__main__":
         
         elif enemy_grid[guess_row][guess_col] == 'D':
             print(f"You hit the enemy's {computer_ship_name3}!")
-            enemy_grid[guess_row][guess_col] = "X"
+            player_guess_grid[guess_row][guess_col] = "X"
             computer_ships_remaining = computer_ships_remaining - 1
             computer_destroyer_remaining -= 1
             
@@ -505,8 +508,8 @@ if __name__ == "__main__":
         
         elif enemy_grid[guess_row][guess_col] == 'S':
             print(f"You hit the enemy's {computer_ship_name4}!")
-            enemy_grid[guess_row][guess_col] = "X"
-            computer_ships_remaining = computer_ships_remaining - 1
+            player_guess_grid[guess_row][guess_col] = "X"
+            computer_ships_remaining -= 1
             computer_submarine_remaining -= 1
             
             if computer_submarine_remaining == 0:
@@ -516,8 +519,8 @@ if __name__ == "__main__":
             
         elif enemy_grid[guess_row][guess_col] == 'P':
             print(f"You hit the enemy's {computer_ship_name5}!")
-            enemy_grid[guess_row][guess_col] = "X"
-            computer_ships_remaining = computer_ships_remaining - 1
+            player_guess_grid[guess_row][guess_col] = "X"
+            computer_ships_remaining -= 1
             computer_patrol_remaining -= 1
             
             if computer_patrol_remaining == 0:
@@ -526,23 +529,26 @@ if __name__ == "__main__":
         # Game logic for computer attempting to sink user's ships
         if grid[computer_guess_row][computer_guess_col] == 'O':
             print()
-            grid[computer_guess_row][computer_guess_col] = Fore.RED + 'M' + Fore.WHITE
-            print("Computer missed!")
+            enemy_grid[computer_guess_row][computer_guess_col] = 'M'
+            print(f"Computer struck at {chr(65 + computer_guess_row)}, {computer_guess_col} and missed!")
+            print('\n')
             
             if user_ships_remaining == 0:
                 print("All your ships have sunk! You lose!")
                 break
             
             
-        if grid[computer_guess_row][computer_guess_col] == 'C' or grid[computer_guess_row][computer_guess_col] == 'B' or grid[computer_guess_row][computer_guess_col] == 'D' or grid[computer_guess_row][computer_guess_col] == 'S' or grid[computer_guess_row][computer_guess_col] == 'P':
+        elif grid[computer_guess_row][computer_guess_col] in (user_ship_marker1, user_ship_marker2, user_ship_marker3, user_ship_marker4, user_ship_marker5):
             print('\n')
-            grid[computer_guess_row][computer_guess_col] = Fore.BLACK + 'H' + Fore.WHITE
+            grid[computer_guess_row][computer_guess_col] = 'H'
             print("Computer hit your ship!")
+            print('\n')
             user_ships_remaining -= 1
-            
-        if grid[computer_guess_row][computer_guess_col] == 'H' or grid[computer_guess_row][computer_guess_col] == 'M': 
-            print("Computer already guessed here")
         
+            #if grid[computer_guess_row][computer_guess_col] == 'H' or grid[computer_guess_row][computer_guess_col] == 'M': 
+                #print("Computer already guessed here")
+        else:
+            print('Computer already guessed here!')
             
         # Ending the game
         if computer_ships_remaining == 0:
@@ -555,12 +561,14 @@ if __name__ == "__main__":
            
             
                 
-        print("Your grid:")
+        print("You're grid:")
         create_grid(grid, show_ships=True)
         print('\n')
+        print("You're guessing grid:")
+        create_grid(player_guess_grid, show_ships=False)
+        print('\n')
         
-
-        if turn == 100 or (user_ships_remaining == 0 or computer_ships_remaining == 0):
+        if turn == 50 or (user_ships_remaining == 0 or computer_ships_remaining == 0):
             print("\nGAME OVER")
             if user_ships_remaining != 0 and computer_ships_remaining != 0:
                 print("It's a tie! Both players couldn't sink any ships.")
